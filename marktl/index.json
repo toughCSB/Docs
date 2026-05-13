@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-13T09:50:48.964Z",
+  "items": [
+    {
+      "slug": "26-05-01-도메인-온톨리지란-무엇인가-ai-시대-문제-세계와-업무-언어",
+      "shortId": "sd130o",
+      "url": "https://github.com/toughCSB/Docs/marktl/s/sd130o/",
+      "canonicalUrl": "https://github.com/toughCSB/Docs/marktl/26-05-01-%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%98%A8%ED%86%A8%EB%A6%AC%EC%A7%80%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80-ai-%EC%8B%9C%EB%8C%80-%EB%AC%B8%EC%A0%9C-%EC%84%B8%EA%B3%84%EC%99%80-%EC%97%85%EB%AC%B4-%EC%96%B8%EC%96%B4/",
+      "sourcePath": "00. Inbox/(26.05.01) 도메인, 온톨리지란 무엇인가 - AI 시대 문제 세계와 업무 언어.md",
+      "artifactType": "slide-deck",
+      "title": "도메인이란 무엇인가 - AI 시대 문제 세계와 업무 언어",
+      "excerpt": "한줄 요약 ==도메인(domain)은 “AI나 소프트웨어가 다루는 현실 세계의 문제 영역”이고, 온톨로지(ontology)는 그 세계의 객체·관계·규칙을 AI가 따라갈 수 있게 만든 의미 지도다.== 기술이 “어떻게 만들 것인가”라면, 도메인은 “무엇을 만들고, 그 세계가 어떤 용어와 규칙으로 돌아가는가”를 뜻한다. 온톨",
+      "tags": [
+        "- llm",
+        "도메인이란 무엇인가",
+        "AI 시대의 도메인 지식과 도메인 언어",
+        "도메인 = 문제 세계와 업무 언어",
+        "도메인과 온톨로지",
+        "Hermes",
+        "llm",
+        "domain-knowledge"
+      ],
+      "updatedAt": "2026-05-13T09:50:48.964Z"
+    }
+  ]
+}
