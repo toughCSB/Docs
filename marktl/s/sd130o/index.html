@@ -1,0 +1,1536 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>도메인이란 무엇인가 - AI 시대 문제 세계와 업무 언어</title>
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --paper: #fffdfa;
+      --ink: #171717;
+      --muted: #68625b;
+      --line: #dfd6ca;
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --deep: #18332f;
+      --soft: #e7f2ef;
+      --soft-2: #fff4df;
+      --code: #15201f;
+      --shadow: 0 18px 50px rgba(38, 28, 16, 0.11);
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 32rem),
+        linear-gradient(180deg, #f8f5ef 0%, var(--bg) 42%, #eee8df 100%);
+      color: var(--ink);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.72;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 32px;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .toc {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      padding: 18px;
+      background: rgba(255, 253, 250, 0.84);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(38, 28, 16, 0.08);
+      backdrop-filter: blur(14px);
+    }
+
+    .toc h2 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      letter-spacing: 0;
+      color: var(--deep);
+    }
+
+    .toc a {
+      display: block;
+      padding: 7px 8px;
+      border-radius: 6px;
+      color: #4d4740;
+      text-decoration: none;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .toc a:hover,
+    .toc a.active {
+      background: var(--soft);
+      color: var(--deep);
+    }
+
+    .toc .toc-group {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .hero {
+      min-height: 78vh;
+      display: grid;
+      align-content: center;
+      padding: 72px 48px 52px;
+      background:
+        linear-gradient(135deg, rgba(24, 51, 47, 0.96), rgba(15, 118, 110, 0.86)),
+        linear-gradient(180deg, #18332f, #0f766e);
+      color: #fffdfa;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero:after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 8px;
+      background: linear-gradient(90deg, #d97706, #14b8a6, #f59e0b);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 999px;
+      color: #d7fffa;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      max-width: 980px;
+      margin: 0;
+      font-size: clamp(38px, 7vw, 82px);
+      line-height: 1.04;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .hero .lead {
+      max-width: 850px;
+      margin: 28px 0 0;
+      font-size: clamp(18px, 2.1vw, 25px);
+      color: #e8fffb;
+      line-height: 1.7;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 34px;
+      color: #fff;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 32px;
+      padding: 5px 10px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .deck {
+      margin-top: 28px;
+      display: grid;
+      gap: 22px;
+    }
+
+    section.slide {
+      background: rgba(255, 253, 250, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 4vw, 54px);
+      scroll-margin-top: 24px;
+      position: relative;
+    }
+
+    .slide.compact {
+      padding: clamp(24px, 3vw, 38px);
+    }
+
+    .slide-header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      color: var(--accent-2);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--deep);
+      font-size: clamp(25px, 3.4vw, 44px);
+      line-height: 1.16;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    h3 {
+      margin: 28px 0 12px;
+      color: var(--deep);
+      font-size: clamp(19px, 2.2vw, 26px);
+      line-height: 1.28;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 16px;
+    }
+
+    .bigline {
+      margin: 0;
+      font-size: clamp(20px, 2.4vw, 30px);
+      line-height: 1.55;
+      color: #25221e;
+      font-weight: 750;
+    }
+
+    mark {
+      background: linear-gradient(180deg, transparent 42%, rgba(245, 158, 11, 0.34) 42%);
+      padding: 0 0.08em;
+      color: inherit;
+    }
+
+    .summary-box,
+    .callout {
+      margin: 22px 0;
+      padding: 20px 22px;
+      border-left: 5px solid var(--accent);
+      background: var(--soft);
+      border-radius: var(--radius);
+    }
+
+    .callout.tip {
+      border-left-color: var(--accent-2);
+      background: var(--soft-2);
+    }
+
+    .callout strong,
+    .summary-box strong {
+      color: var(--deep);
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .mini-card {
+      padding: 18px;
+      background: #fbf7f1;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .mini-card h3 {
+      margin-top: 0;
+      font-size: 19px;
+    }
+
+    .mini-card p:last-child,
+    .mini-card ul:last-child {
+      margin-bottom: 0;
+    }
+
+    ul, ol {
+      margin: 0 0 18px 1.2em;
+      padding: 0;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 26px;
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: table;
+    }
+
+    th, td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #efe7dc;
+      color: var(--deep);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    blockquote {
+      margin: 22px 0;
+      padding: 18px 22px;
+      border-left: 5px solid var(--accent-2);
+      background: #fff7e8;
+      border-radius: var(--radius);
+      color: #332b22;
+      font-size: 1.04rem;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      color: #0f4f49;
+      background: rgba(15, 118, 110, 0.1);
+      padding: 0.12em 0.32em;
+      border-radius: 4px;
+      word-break: break-word;
+    }
+
+    pre {
+      margin: 18px 0 24px;
+      padding: 18px;
+      overflow: auto;
+      color: #d9f7f2;
+      background: var(--code);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.08);
+      line-height: 1.62;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    .visuals {
+      display: grid;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .visuals img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 32px rgba(38, 28, 16, 0.12);
+      background: #fff;
+    }
+
+    figcaption {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .number-list {
+      counter-reset: item;
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .number-list li {
+      counter-increment: item;
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .number-list li:before {
+      content: counter(item);
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--deep);
+      color: #fffdfa;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    details {
+      margin: 16px 0;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbf7f1;
+    }
+
+    summary {
+      cursor: pointer;
+      color: var(--deep);
+      font-weight: 800;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid #b9cfc9;
+      background: #effaf7;
+      color: var(--deep);
+      border-radius: 6px;
+      padding: 9px 12px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #dff3ee;
+    }
+
+    .copy-note {
+      color: var(--muted);
+      font-size: 13px;
+      min-height: 1.4em;
+    }
+
+    .sources {
+      columns: 2;
+      column-gap: 32px;
+      font-size: 14px;
+    }
+
+    .sources li {
+      break-inside: avoid;
+      margin-bottom: 8px;
+    }
+
+    .footer {
+      padding: 28px 8px 18px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 420ms ease, transform 420ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .layout {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+
+      .toc {
+        position: relative;
+        top: 0;
+        max-height: none;
+      }
+
+      .toc nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2px 8px;
+      }
+
+      .split,
+      .grid.two,
+      .grid.three {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 54px 26px 44px;
+      }
+
+      .sources {
+        columns: 1;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        line-height: 1.66;
+      }
+
+      .layout {
+        padding: 10px;
+      }
+
+      .toc nav {
+        grid-template-columns: 1fr;
+      }
+
+      section.slide {
+        padding: 24px 18px;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .hero-meta {
+        gap: 7px;
+      }
+
+      .pill {
+        font-size: 12px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .layout {
+        display: block;
+        padding: 0;
+      }
+
+      .toc,
+      .toolbar,
+      button {
+        display: none !important;
+      }
+
+      .hero,
+      section.slide {
+        box-shadow: none;
+        break-inside: avoid;
+        border: 1px solid #ddd;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+<meta property="og:type" content="article">
+<meta property="og:title" content="도메인이란 무엇인가 - AI 시대 문제 세계와 업무 언어">
+<meta property="og:description" content="한줄 요약 ==도메인(domain)은 “AI나 소프트웨어가 다루는 현실 세계의 문제 영역”이고, 온톨로지(ontology)는 그 세계의 객체·관계·규칙을 AI가 따라갈 수 있게 만든 의미 지도다.== 기술이 “어떻게 만들 것인가”라면, 도메인은 “무엇을 만들고, 그 세계가 어떤 용어와 규칙으로 돌아가는가”를 뜻한다. 온톨">
+<meta property="og:url" content="https://github.com/toughCSB/Docs/marktl/s/sd130o/">
+<meta property="og:image" content="https://github.com/toughCSB/Docs/marktl/s/sd130o/assets/프레임워크-도메인-온톨리지란-무엇인가-ai-시대-구조-fullboard-infographic-v4.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="도메인이란 무엇인가 - AI 시대 문제 세계와 업무 언어">
+<meta name="twitter:description" content="한줄 요약 ==도메인(domain)은 “AI나 소프트웨어가 다루는 현실 세계의 문제 영역”이고, 온톨로지(ontology)는 그 세계의 객체·관계·규칙을 AI가 따라갈 수 있게 만든 의미 지도다.== 기술이 “어떻게 만들 것인가”라면, 도메인은 “무엇을 만들고, 그 세계가 어떤 용어와 규칙으로 돌아가는가”를 뜻한다. 온톨">
+<meta name="twitter:image" content="https://github.com/toughCSB/Docs/marktl/s/sd130o/assets/프레임워크-도메인-온톨리지란-무엇인가-ai-시대-구조-fullboard-infographic-v4.png">
+<link rel="canonical" href="https://github.com/toughCSB/Docs/marktl/s/sd130o/">
+</head>
+<body>
+  <div class="layout">
+    <aside class="toc" aria-label="문서 목차">
+      <h2>읽기 내비게이션</h2>
+      <nav id="toc">
+        <a href="#summary">한줄 요약</a>
+        <a href="#why-domain">왜 도메인이 중요한가</a>
+        <a href="#definition">가장 쉬운 정의</a>
+        <a href="#ontology">온톨로지</a>
+        <a href="#contexts">다섯 가지 맥락</a>
+        <a href="#ddd">DDD 관점</a>
+        <a href="#word-boundary">같은 단어, 다른 의미</a>
+        <a href="#ai-risks">AI가 도메인을 모를 때</a>
+        <a href="#domain-brief">AI 작업 세계 설명서</a>
+        <a href="#analogy">신입과 업무 매뉴얼</a>
+        <a href="#obsidian">LLM Wiki 예시</a>
+        <a href="#document-template">도메인 문서 구성</a>
+        <a href="#prompt-template">프롬프트 템플릿</a>
+        <a href="#expertise">도메인을 안다는 것</a>
+        <a href="#misunderstandings">흔한 오해</a>
+        <a href="#ten-minutes">10분 정리</a>
+        <a href="#gpt55">GPT-5.5 프롬프트 관점</a>
+        <a href="#insights">핵심 인사이트</a>
+        <a href="#actions">실행 방안</a>
+        <a href="#references">리서치 참고</a>
+      </nav>
+      <div class="toc-group">
+        <button type="button" id="copyOutline">핵심 outline 복사</button>
+        <p class="copy-note" id="copyState" aria-live="polite"></p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="hero" id="top">
+        <div class="eyebrow">AI 시대의 도메인 지식 · 온톨로지 · DDD</div>
+        <h1>도메인이란 무엇인가</h1>
+        <p class="lead">
+          도메인은 AI나 소프트웨어가 다루는 현실 세계의 문제 영역이고,
+          온톨로지는 그 세계의 객체·관계·규칙을 AI가 따라갈 수 있게 만든 의미 지도다.
+        </p>
+        <div class="hero-meta">
+          <span class="pill">작성자 Hermes</span>
+          <span class="pill">작성 2026-05-01</span>
+          <span class="pill">수정 2026-05-05</span>
+          <span class="pill">status active</span>
+        </div>
+      </header>
+
+      <div class="deck">
+        <section class="slide reveal" id="summary">
+          <div class="slide-header">
+            <div class="kicker">Executive Summary</div>
+            <h2>기술은 “어떻게”, 도메인은 “무엇과 왜”를 정한다</h2>
+          </div>
+          <p class="bigline">
+            <mark>도메인은 AI가 일할 현실 세계의 지도</mark>이고,
+            <mark>온톨로지는 그 지도 안의 객체·관계·제약을 연결한 업무 관계도</mark>다.
+          </p>
+          <div class="summary-box">
+            기술이 “어떻게 만들 것인가”라면, 도메인은 “무엇을 만들고 그 세계가 어떤 용어와 규칙으로 돌아가는가”를 뜻한다.
+            온톨로지는 여기서 한 걸음 더 나아가 “그 용어들이 서로 어떻게 연결되는가”를 구조화한다.
+          </div>
+          <div class="visuals">
+            <figure>
+              <img src="assets/%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%98%A8%ED%86%A8%EB%A6%AC%EC%A7%80%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80-ai-%EC%8B%9C%EB%8C%80-%EA%B5%AC%EC%A1%B0-fullboard-infographic-v4.png" alt="프레임워크, 도메인, 온톨로지의 관계를 설명하는 인포그래픽" />
+              <figcaption>도메인과 온톨로지는 프레임워크보다 앞서 AI가 이해해야 할 문제 세계를 정의한다.</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/domain-ai-era-problem-world-infographic-v2.png" alt="AI 시대 도메인을 문제 세계로 설명하는 인포그래픽" />
+              <figcaption>AI 시대의 도메인은 현실의 문제, 업무 언어, 검증 기준을 함께 담는다.</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="slide reveal" id="why-domain">
+          <div class="slide-header">
+            <div class="kicker">Why Now</div>
+            <h2>AI는 빠르게 만들지만, 현실의 의미는 자동으로 맞히지 못한다</h2>
+          </div>
+          <p>
+            AI에게 “주문 기능 만들어줘”라고 말하면 일반적인 쇼핑몰을 떠올려
+            <code>Order</code>, <code>Payment</code>, <code>Cart</code>, <code>Checkout</code>을 만들 수 있다.
+            하지만 회사마다 “주문”의 의미는 다르다.
+          </p>
+          <div class="grid two">
+            <div class="mini-card">
+              <h3>같은 단어, 다른 업무</h3>
+              <ul>
+                <li>어떤 회사에서 주문은 결제 전 예약 상태다.</li>
+                <li>어떤 회사에서 주문은 결제 완료 후 거래다.</li>
+                <li>어떤 회사에서는 물류 출고 요청까지 포함한다.</li>
+                <li>어떤 회사에서는 결제 실패 주문도 기록에 남긴다.</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>의미가 달라지면 구조도 달라진다</h3>
+              <ul>
+                <li>데이터 구조</li>
+                <li>상태 흐름</li>
+                <li>예외 처리</li>
+                <li>환불 로직</li>
+                <li>재고 차감 시점</li>
+              </ul>
+            </div>
+          </div>
+          <blockquote>
+            AI 시대에는 “코드를 얼마나 빨리 만들 수 있느냐”보다
+            “AI에게 맡길 문제 세계를 얼마나 정확히 설명할 수 있느냐”가 중요해진다.
+          </blockquote>
+        </section>
+
+        <section class="slide reveal" id="definition">
+          <div class="slide-header">
+            <div class="kicker">Definition</div>
+            <h2>도메인은 업계 사람들이 당연하게 아는 세계다</h2>
+          </div>
+          <div class="summary-box">
+            <p><strong>도메인</strong> = 우리가 해결하려는 현실 세계의 문제 영역</p>
+            <p><strong>도메인 지식</strong> = 그 세계가 실제로 돌아가는 규칙과 경험</p>
+            <p><strong>도메인 언어</strong> = 그 세계 사람들이 쓰는 정확한 용어</p>
+            <p><strong>도메인 모델</strong> = 그 용어와 규칙을 소프트웨어·문서·AI 작업 구조로 정리한 것</p>
+            <p><strong>온톨로지</strong> = 그 세계의 개념, 속성, 관계, 제약을 기계가 따라갈 수 있게 연결한 의미 지도</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>예시</th>
+                <th>핵심 질문</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>기술 영역</td>
+                <td>React, Next.js, Python, API, DB, CSS, Docker</td>
+                <td>어떻게 만들 것인가?</td>
+              </tr>
+              <tr>
+                <td>도메인 영역</td>
+                <td>주문, 결제, 환불, 진료, 처방, 인박스, 원문, 요약</td>
+                <td>무엇을 만들고 어떤 의미인가?</td>
+              </tr>
+              <tr>
+                <td>데이터 영역</td>
+                <td>테이블, 컬럼, JSON, 로그, 벡터, 파일</td>
+                <td>무엇을 저장하고 조회할 것인가?</td>
+              </tr>
+              <tr>
+                <td>운영 영역</td>
+                <td>승인, 배포, 검증, 장애 대응, 권한</td>
+                <td>어떻게 안전하게 굴릴 것인가?</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="bigline">기술은 도구다. 도메인은 그 도구로 해결하려는 현실이다.</p>
+        </section>
+
+        <section class="slide reveal" id="ontology">
+          <div class="slide-header">
+            <div class="kicker">Ontology</div>
+            <h2>온톨로지는 단어 목록이 아니라 업무 세계의 연결 구조다</h2>
+          </div>
+          <p>
+            쇼핑몰 도메인에는 고객, 상품, 장바구니, 주문, 결제, 배송, 환불이 있다.
+            여기까지는 용어집이다. 온톨로지는 이 개념들이 어떻게 이어지는지까지 말한다.
+          </p>
+          <div class="grid two">
+            <div class="mini-card">
+              <h3>관계 예시</h3>
+              <ul>
+                <li>고객은 주문을 생성한다.</li>
+                <li>주문은 주문 항목을 포함한다.</li>
+                <li>주문 항목은 상품을 참조한다.</li>
+                <li>주문은 결제와 연결된다.</li>
+                <li>결제 성공 후에만 주문이 확정된다.</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>실무 산출물</h3>
+              <ul>
+                <li>표</li>
+                <li>Mermaid 다이어그램</li>
+                <li>JSON Schema</li>
+                <li>ERD</li>
+                <li>Glossary</li>
+                <li>Triple 목록</li>
+              </ul>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>개념</th>
+                <th>쉬운 설명</th>
+                <th>산출물</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>도메인</td>
+                <td>해결하려는 현실 세계</td>
+                <td>커머스 주문·환불 업무</td>
+              </tr>
+              <tr>
+                <td>도메인 지식</td>
+                <td>그 세계의 규칙과 예외</td>
+                <td>결제 성공 전에는 주문 확정 아님</td>
+              </tr>
+              <tr>
+                <td>도메인 언어</td>
+                <td>사람들이 같이 쓰는 정확한 단어</td>
+                <td>주문, 결제, 배송, 환불</td>
+              </tr>
+              <tr>
+                <td>도메인 모델</td>
+                <td>코드나 문서로 옮긴 업무 구조</td>
+                <td><code>Order</code>, <code>Payment</code>, <code>Refund</code></td>
+              </tr>
+              <tr>
+                <td>온톨로지</td>
+                <td>객체·속성·관계·제약의 의미 지도</td>
+                <td><code>Customer - places - Order</code></td>
+              </tr>
+              <tr>
+                <td>지식 그래프</td>
+                <td>온톨로지에 실제 데이터를 채운 연결망</td>
+                <td><code>성배 - placed - 주문123</code></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout tip">
+            <strong>핵심:</strong> 도메인 문서가 “업무 매뉴얼”이라면, 온톨로지는 “업무 관계도”다.
+            AI 에이전트가 안정적으로 움직이려면 매뉴얼과 관계도가 함께 필요하다.
+          </div>
+        </section>
+
+        <section class="slide reveal" id="contexts">
+          <div class="slide-header">
+            <div class="kicker">Five Contexts</div>
+            <h2>“도메인”은 다섯 가지 맥락에서 쓰인다</h2>
+          </div>
+          <div class="grid">
+            <div class="mini-card">
+              <h3>1. 비즈니스 도메인</h3>
+              <p>쇼핑몰, 병원, 금융, 교육, 물류, 통신, 제조처럼 소프트웨어가 다루는 업무 영역이다. 통신 영업 도메인이라면 요금제, 약정, 해지, 번호 이동, 부가서비스, 단말기 할부, 고객 등급, 계약 조건, 현장 영업 프로세스가 중요하다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>2. 도메인 지식</h3>
+              <p>문서에 깔끔하게 적히지 않은 현장 지식까지 포함한다. 고객이 헷갈리는 포인트, 늘 생기는 예외, 법과 규제, 내부 은어, 실패 사례, 경험칙이 여기에 들어간다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>3. 도메인 언어</h3>
+              <p>DDD의 Ubiquitous Language다. 개발자와 도메인 전문가가 함께 쓰는 공통적이고 엄격한 언어이며, 코드·문서·테스트·프롬프트에 일관되게 반영되어야 한다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>4. 도메인 특화 언어, DSL</h3>
+              <p>SQL, HTML/CSS, Terraform, Mermaid, 정규식처럼 특정 문제 영역을 위해 만든 언어다. AI에게는 문법, 좋은 예시, anti-pattern, 검증 루프가 함께 필요하다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>5. 온톨로지와 지식 그래프</h3>
+              <p>AI 에이전트, Graph RAG, 기업 자동화에서 중요해진 맥락이다. 업무는 문장만으로 돌아가지 않고 객체, 상태, 관계, 권한, 액션, 예외로 움직인다.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide reveal" id="ddd">
+          <div class="slide-header">
+            <div class="kicker">DDD</div>
+            <h2>DDD는 실제 비즈니스 세계의 개념과 언어를 코드 구조에 드러내는 태도다</h2>
+          </div>
+          <blockquote>
+            “코드를 기술 중심으로만 짜지 말고, 실제 비즈니스 세계의 개념과 언어가 코드 구조에 드러나게 하자.”
+          </blockquote>
+          <p>
+            DDD의 핵심은 복잡한 패턴 이름을 외우는 것이 아니다.
+            중요한 것은 도메인 전문가와 개발자가 같은 언어를 쓰고,
+            그 언어가 코드, 문서, 테스트, AI 프롬프트에도 일관되게 반영되는 것이다.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>개념</th>
+                <th>쉬운 설명</th>
+                <th>예시</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Domain</td>
+                <td>해결하려는 문제 세계</td>
+                <td>쇼핑몰, 병원 예약, LLM Wiki</td>
+              </tr>
+              <tr>
+                <td>Domain Knowledge</td>
+                <td>그 세계가 돌아가는 규칙</td>
+                <td>결제 성공 시점에만 재고 차감</td>
+              </tr>
+              <tr>
+                <td>Ubiquitous Language</td>
+                <td>모두가 같이 쓰는 정확한 용어</td>
+                <td>주문, 체크아웃, 결제, 환불을 구분</td>
+              </tr>
+              <tr>
+                <td>Domain Model</td>
+                <td>규칙과 용어를 구조로 만든 것</td>
+                <td>Order, Payment, Refund, Inventory</td>
+              </tr>
+              <tr>
+                <td>Ontology</td>
+                <td>개념과 관계를 기계가 따라가게 만든 의미 지도</td>
+                <td>Customer가 Order를 만들고 Order가 Payment를 가진다</td>
+              </tr>
+              <tr>
+                <td>Bounded Context</td>
+                <td>같은 단어가 같은 의미로 쓰이는 경계</td>
+                <td>물류의 Product와 판매의 Product는 다를 수 있음</td>
+              </tr>
+              <tr>
+                <td>Entity</td>
+                <td>고유한 ID가 중요한 객체</td>
+                <td>고객, 주문, 계좌</td>
+              </tr>
+              <tr>
+                <td>Value Object</td>
+                <td>값 자체가 중요한 객체</td>
+                <td>주소, 금액, 기간</td>
+              </tr>
+              <tr>
+                <td>Aggregate</td>
+                <td>일관성을 지키는 객체 묶음</td>
+                <td>주문과 주문 항목</td>
+              </tr>
+              <tr>
+                <td>Domain Event</td>
+                <td>도메인에서 일어난 의미 있는 사건</td>
+                <td>주문 완료됨, 결제 실패함, 노트 발행됨</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="slide reveal" id="word-boundary">
+          <div class="slide-header">
+            <div class="kicker">Language Boundary</div>
+            <h2>같은 단어도 팀마다 다른 의미를 갖는다</h2>
+          </div>
+          <p>
+            “상품”이라는 단어도 판매팀, 물류팀, 회계팀, CS팀, 마케팅팀에서 서로 다른 규칙을 가진다.
+            이 경계를 나누지 않으면 AI는 판매 로직, 물류 로직, 회계 로직을 한 클래스나 한 프롬프트 안에 섞어버릴 수 있다.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>문맥</th>
+                <th>상품의 의미</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>판매팀</td>
+                <td>고객에게 판매되는 상품명, 가격, 프로모션</td>
+              </tr>
+              <tr>
+                <td>물류팀</td>
+                <td>창고에서 피킹·포장·출고되는 물리적 재고</td>
+              </tr>
+              <tr>
+                <td>회계팀</td>
+                <td>매출 인식과 세금 처리를 위한 항목</td>
+              </tr>
+              <tr>
+                <td>CS팀</td>
+                <td>교환·반품·환불 정책이 적용되는 대상</td>
+              </tr>
+              <tr>
+                <td>마케팅팀</td>
+                <td>캠페인, 타깃, 노출 소재와 연결되는 단위</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="summary-box">
+            <strong>Bounded Context</strong>는 같은 단어가 같은 의미로 통하는 범위다.
+            이 범위를 벗어나면 같은 단어라도 새로 정의해야 한다.
+          </div>
+        </section>
+
+        <section class="slide reveal" id="ai-risks">
+          <div class="slide-header">
+            <div class="kicker">Failure Modes</div>
+            <h2>AI가 도메인을 모르면 그럴듯하지만 어긋난 결과가 나온다</h2>
+          </div>
+          <ol class="number-list">
+            <li><span><strong>단어를 섞는다.</strong> <code>Order</code>, <code>Checkout</code>, <code>Purchase</code>, <code>Payment</code>를 비슷한 뜻으로 섞어 쓴다.</span></li>
+            <li><span><strong>현실 규칙을 놓친다.</strong> 결제 취소, 부분 환불, 반품 완료 후 환불, 포인트 환급의 차이를 무시할 수 있다.</span></li>
+            <li><span><strong>검증 기준이 없다.</strong> “완료했습니다”라는 말만 보고 실제 DB에 booking이 생성됐는지 확인하지 않을 수 있다.</span></li>
+            <li><span><strong>맥락이 너무 많아져도 망가진다.</strong> 현재 작업에 필요한 정확한 컨텍스트가 아니라 모든 문서를 넣으면 context rot이 생긴다.</span></li>
+            <li><span><strong>관계를 따라가지 못한다.</strong> VIP 고객의 환불 승인처럼 고객, 주문, 결제, 반품, 권한, 정산 관계를 따라가야 하는 일을 즉석에서 추측한다.</span></li>
+          </ol>
+          <div class="callout tip">
+            도메인 용어만 알려줘도 AI는 어느 정도 답할 수 있다.
+            그러나 업무가 복잡해지면 단어보다 관계가 중요해진다.
+          </div>
+        </section>
+
+        <section class="slide reveal" id="domain-brief">
+          <div class="slide-header">
+            <div class="kicker">AI Work Context</div>
+            <h2>AI 시대의 도메인은 “AI에게 주는 작업 세계 설명서”다</h2>
+          </div>
+          <p>
+            GPT 프롬프트가 결과 계약서에 가깝다면, 도메인은 그 계약서의 업무 세계다.
+            좋은 AI 작업에는 작업 계약서, 도메인 설명서, 온톨로지 초안이 함께 있어야 한다.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>요소</th>
+                <th>역할</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>결과 계약서</td>
+                <td>무엇이 끝난 상태인가?</td>
+              </tr>
+              <tr>
+                <td>도메인</td>
+                <td>그 결과가 어떤 현실 세계 규칙 안에서 의미를 갖는가?</td>
+              </tr>
+              <tr>
+                <td>도메인 언어</td>
+                <td>그 세계를 어떤 단어로 정확히 부를 것인가?</td>
+              </tr>
+              <tr>
+                <td>도메인 모델</td>
+                <td>그 단어와 규칙을 어떤 구조로 표현할 것인가?</td>
+              </tr>
+              <tr>
+                <td>온톨로지</td>
+                <td>그 구조 안의 객체들이 서로 어떤 관계를 맺는가?</td>
+              </tr>
+              <tr>
+                <td>검증 기준</td>
+                <td>현실 세계에서 정말 성공했는지 어떻게 확인할 것인가?</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="grid three">
+            <div class="mini-card">
+              <h3>1. 작업 계약서</h3>
+              <p>목표, 성공 기준, 제약, 출력 형식, 멈춤 조건</p>
+            </div>
+            <div class="mini-card">
+              <h3>2. 도메인 설명서</h3>
+              <p>용어, 상태, 규칙, 예외, 예시, 검증 방법</p>
+            </div>
+            <div class="mini-card">
+              <h3>3. 온톨로지 초안</h3>
+              <p>핵심 객체, 속성, 관계, 제약, 가능한 액션</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide reveal" id="analogy">
+          <div class="slide-header">
+            <div class="kicker">Analogy</div>
+            <h2>AI는 똑똑한 신입이고, 도메인은 회사 업무 매뉴얼이다</h2>
+          </div>
+          <p>
+            AI는 문서 작성도 잘하고, 코드도 빨리 짜고, 검색도 빠르다.
+            하지만 입사 첫날에는 우리 회사의 업무 규칙을 모른다.
+          </p>
+          <div class="grid two">
+            <div class="mini-card">
+              <h3>도메인 문서가 알려주는 것</h3>
+              <ul>
+                <li>무엇을 같은 것으로 봐야 하는가</li>
+                <li>무엇을 다르게 봐야 하는가</li>
+                <li>어떤 단어를 쓰고 쓰지 말아야 하는가</li>
+                <li>어떤 상태 전이가 가능한가</li>
+                <li>어떤 예외가 중요한가</li>
+                <li>어떤 결과가 진짜 완료인가</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>온톨로지가 추가로 알려주는 것</h3>
+              <ul>
+                <li>고객은 계약자와 사용자를 모두 포함하는가</li>
+                <li>계약자는 여러 회선을 가질 수 있는가</li>
+                <li>회선은 요금제, 약정, 부가서비스와 어떻게 연결되는가</li>
+                <li>상담원과 승인자가 바꿀 수 있는 객체는 무엇인가</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide reveal" id="obsidian">
+          <div class="slide-header">
+            <div class="kicker">Example Domain</div>
+            <h2>LLM Wiki / Obsidian 볼트도 하나의 도메인이다</h2>
+          </div>
+          <p>
+            이 볼트에는 기술보다 중요한 업무 언어가 있다.
+            AI가 이 도메인을 모르면 원문 보존 원칙을 깨거나, 인박스와 위키 컴파일을 같은 작업처럼 처리할 수 있다.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>도메인 용어</th>
+                <th>의미</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Inbox</td>
+                <td>새 자료가 임시로 들어오는 평탄한 수집 공간</td>
+              </tr>
+              <tr>
+                <td>Raw Source</td>
+                <td>원문을 보존하는 불변층</td>
+              </tr>
+              <tr>
+                <td>Wiki Page</td>
+                <td>Raw Source를 바탕으로 재사용 가능한 지식으로 컴파일한 문서</td>
+              </tr>
+              <tr>
+                <td>Ingest</td>
+                <td>자료를 분석하고 Raw Source, Wiki, Memory, Action으로 라우팅하는 작업</td>
+              </tr>
+              <tr>
+                <td>Query</td>
+                <td>볼트 지식을 검색하고 합성해서 답변하는 작업</td>
+              </tr>
+              <tr>
+                <td>Action</td>
+                <td>실행해야 할 일</td>
+              </tr>
+              <tr>
+                <td>Decision</td>
+                <td>중요한 결정 기록</td>
+              </tr>
+              <tr>
+                <td>Core Context</td>
+                <td>수집·정리 기준이 되는 장기 맥락</td>
+              </tr>
+              <tr>
+                <td>AGENTS.md / CLAUDE.md</td>
+                <td>AI가 이 볼트에서 일할 때 따라야 하는 운영 규칙</td>
+              </tr>
+            </tbody>
+          </table>
+          <details open>
+            <summary>간단한 온톨로지 예시</summary>
+            <pre><code>InboxNote -> becomes -> RawSource
+RawSource -> compilesInto -> WikiPage
+WikiPage -> references -> RawSource
+Query -> reads -> WikiPage
+Query -> mayCreate -> QueryResult
+Source -> mayProduce -> Action
+Source -> mayProduce -> Decision
+Action -> belongsTo -> Project
+CoreContext -> guides -> Ingest
+CLAUDE.md -> governs -> VaultOperation
+AGENTS.md -> adapts -> CodexOperation
+Attachment -> belongsTo -> Note</code></pre>
+          </details>
+        </section>
+
+        <section class="slide reveal" id="document-template">
+          <div class="slide-header">
+            <div class="kicker">Document Design</div>
+            <h2>도메인 문서는 길이보다 구조가 중요하다</h2>
+          </div>
+          <div class="grid two">
+            <div class="mini-card">
+              <h3>1. 도메인 범위</h3>
+              <p>이 시스템이 다루는 문제와 다루지 않는 문제를 적는다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>2. 용어집</h3>
+              <p>같은 개념은 같은 단어로, 다른 개념은 다른 단어로 정의한다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>3. 온톨로지 초안</h3>
+              <p>핵심 객체와 관계를 triple 형태로 적는다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>4. 상태와 생명주기</h3>
+              <p>상태가 있는 도메인이라면 가능한 흐름과 불가능한 전이를 적는다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>5. 규칙과 불변 조건</h3>
+              <p>절대 깨지면 안 되는 업무 규칙을 명시한다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>6. 예시와 반례</h3>
+              <p>좋은 예시뿐 아니라 나쁜 예시도 함께 제공한다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>7. 검증 방법</h3>
+              <p>AI가 말로 완료했다고 해서 끝내지 말고 실제 도메인 결과를 확인한다.</p>
+            </div>
+          </div>
+
+          <details>
+            <summary>예시 코드 블록 보기</summary>
+            <pre><code>## Domain Scope
+이 시스템은 YouTube/웹/소셜 자료를 Obsidian LLM Wiki에 저장하고
+재사용 가능한 지식으로 정리한다.
+
+Out of Scope:
+- 개인 일정 관리
+- 결제/구독 관리
+- 외부 볼트 자동 재배치
+
+## Business Rules / Invariants
+- 결제 성공 전에는 재고를 차감하지 않는다.
+- Raw Source 원문은 요약으로 대체하지 않는다.
+- 첨부파일은 반드시 80. References/Attachments에 둔다.
+- 정책 근거가 부족하면 사용자에게 질문은 하나만 한다.</code></pre>
+          </details>
+        </section>
+
+        <section class="slide reveal" id="prompt-template">
+          <div class="slide-header">
+            <div class="kicker">Reusable Template</div>
+            <h2>AI에게 줄 수 있는 Domain Brief 템플릿</h2>
+          </div>
+          <p>
+            아래 템플릿은 프롬프트, <code>AGENTS.md</code>, <code>CLAUDE.md</code>,
+            <code>domain-language.md</code>, 프로젝트 README에 응용할 수 있다.
+          </p>
+          <pre id="domainTemplate"><code># Domain Brief
+
+## 1. Domain Scope
+이 프로젝트가 해결하는 현실 세계 문제는 무엇인가?
+다루지 않는 범위는 무엇인가?
+
+## 2. Users / Actors
+이 도메인에 등장하는 사람 또는 시스템은 누구인가?
+각자의 목표는 무엇인가?
+
+## 3. Glossary
+핵심 용어를 정의한다.
+같은 단어를 여러 의미로 쓰지 않는다.
+다른 의미는 다른 단어로 분리한다.
+
+## 4. Lifecycle / State
+중요 객체의 상태 흐름을 적는다.
+어떤 상태 전이가 가능한지/불가능한지 적는다.
+
+## 5. Ontology Sketch
+핵심 객체, 속성, 관계를 적는다.
+객체 간 관계를 triple 형태로 10개 안팎 작성한다.
+
+## 6. Business Rules
+반드시 지켜야 하는 규칙을 적는다.
+규칙의 이유도 짧게 적는다.
+
+## 7. Examples / Anti-examples
+좋은 예시와 나쁜 예시를 각각 3~5개 적는다.
+
+## 8. Tool / Validation Rules
+AI가 언제 도구를 써야 하는지,
+무엇을 확인하면 완료인지 적는다.
+
+## 9. Output / Naming Rules
+코드, 문서, 응답에서 어떤 이름과 형식을 쓸지 정한다.</code></pre>
+          <div class="toolbar">
+            <button type="button" id="copyTemplate">Domain Brief 템플릿 복사</button>
+            <span class="copy-note" id="templateCopyState" aria-live="polite"></span>
+          </div>
+        </section>
+
+        <section class="slide reveal" id="expertise">
+          <div class="slide-header">
+            <div class="kicker">Domain Expertise</div>
+            <h2>도메인을 안다는 것은 업계 단어를 많이 아는 것이 아니다</h2>
+          </div>
+          <p>
+            도메인을 안다는 것은 객체, 상태, 관계, 제약, 예외, 완료 기준, 고객 가치, 자동화 위험을 설명할 수 있다는 뜻이다.
+          </p>
+          <div class="grid two">
+            <div class="mini-card">
+              <h3>도메인 전문가가 답해야 할 질문</h3>
+              <ul>
+                <li>이 일에서 진짜 중요한 객체는 무엇인가?</li>
+                <li>이 객체는 어떤 상태를 가지는가?</li>
+                <li>다른 객체와 어떤 관계를 맺는가?</li>
+                <li>가능한 상태 전이와 불가능한 전이는 무엇인가?</li>
+                <li>반드시 지켜야 하는 규칙과 예외는 무엇인가?</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>AI 시대의 확장 역량</h3>
+              <ul>
+                <li>무엇이 실제 완료인지 정의한다.</li>
+                <li>어떤 결과가 고객에게 가치 있는지 판단한다.</li>
+                <li>어떤 자동화가 위험한지 구분한다.</li>
+                <li>어떤 검증을 통과해야 믿을 수 있는지 정한다.</li>
+                <li>객체 간 관계를 구조화해 온톨로지로 만든다.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide reveal" id="misunderstandings">
+          <div class="slide-header">
+            <div class="kicker">Misunderstandings</div>
+            <h2>흔한 오해 네 가지</h2>
+          </div>
+          <div class="grid two">
+            <div class="mini-card">
+              <h3>오해 1. 도메인 = 업종 이름이다</h3>
+              <p>“금융”이나 “교육”은 너무 크다. 실제로 필요한 것은 “개인 대출 심사”, “사내 AI 입문 강의 운영”, “반품 승인과 환불 처리”처럼 좁은 문제 세계다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>오해 2. 도메인 지식은 현업만 가진다</h3>
+              <p>현업이 가장 많이 알지만, 개발자도 도메인 지식을 가져야 한다. 현업도 AI와 소프트웨어가 이해할 수 있게 지식을 구조화해야 한다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>오해 3. 도메인 문서는 길수록 좋다</h3>
+              <p>좋은 도메인 문서는 짧더라도 핵심 용어, 객체와 관계, 상태 흐름, 규칙, 예외, 예시, 검증 기준이 분명하다.</p>
+            </div>
+            <div class="mini-card">
+              <h3>오해 4. DDD는 대규모 백엔드에만 필요하다</h3>
+              <p>전통적인 DDD 패턴 전체는 복잡한 시스템에서 더 필요하지만, 도메인 언어와 bounded context는 작은 AI 작업에도 필요하다.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide reveal" id="ten-minutes">
+          <div class="slide-header">
+            <div class="kicker">Practical Checklist</div>
+            <h2>AI에게 일을 맡기기 전 10분 도메인·온톨로지 정리</h2>
+          </div>
+          <ol class="number-list">
+            <li><span>이 작업의 도메인은 무엇인가?</span></li>
+            <li><span>핵심 용어 10개는 무엇인가?</span></li>
+            <li><span>헷갈리기 쉬운 비슷한 단어는 무엇인가?</span></li>
+            <li><span>핵심 객체 5~10개는 무엇인가?</span></li>
+            <li><span>객체 간 관계 10개는 무엇인가?</span></li>
+            <li><span>반드시 지켜야 하는 규칙 5개는 무엇인가?</span></li>
+            <li><span>상태 흐름이 있는가?</span></li>
+            <li><span>예외 상황은 무엇인가?</span></li>
+            <li><span>좋은 결과 예시는 무엇인가?</span></li>
+            <li><span>나쁜 결과 예시는 무엇인가?</span></li>
+            <li><span>AI가 어떤 도구나 파일을 확인해야 하는가?</span></li>
+            <li><span>무엇을 확인하면 완료라고 볼 수 있는가?</span></li>
+          </ol>
+          <div class="callout tip">
+            특히 4번과 5번이 온톨로지의 시작이다.
+            객체와 관계를 적는 순간 AI는 문장을 생성하는 수준에서 업무 세계를 따라가는 수준으로 올라간다.
+          </div>
+        </section>
+
+        <section class="slide reveal" id="gpt55">
+          <div class="slide-header">
+            <div class="kicker">Prompt Architecture</div>
+            <h2>GPT-5.5 프롬프트는 Outcome Contract와 Domain Brief를 분리하면 강해진다</h2>
+          </div>
+          <div class="split">
+            <div>
+              <h3>A. Outcome Contract</h3>
+              <pre><code>목표: 무엇을 끝낼 것인가
+성공 기준: 어떤 조건을 만족하면 완료인가
+제약: 하지 말아야 할 것
+출력 형식: 어떤 형태로 답할 것인가
+Stop rules: 언제 검색/도구/질문을 멈출 것인가</code></pre>
+            </div>
+            <div>
+              <h3>B. Domain Brief</h3>
+              <pre><code>도메인 범위: 어떤 문제 세계인가
+용어집: 핵심 단어와 의미
+온톨로지 초안: 핵심 객체와 관계
+상태 흐름: 중요한 객체의 생명주기
+규칙: 반드시 지켜야 할 업무 조건
+예시/반례: 좋은 것과 나쁜 것
+검증: 실제 성공 여부를 어떻게 확인할 것인가</code></pre>
+            </div>
+          </div>
+          <p class="bigline">
+            둘을 합치면 AI에게 “무엇을 만들지”와 “그 일이 어떤 세계에서 의미를 갖는지”가 동시에 전달된다.
+          </p>
+        </section>
+
+        <section class="slide reveal" id="insights">
+          <div class="slide-header">
+            <div class="kicker">Key Insights</div>
+            <h2>핵심 인사이트</h2>
+          </div>
+          <ol class="number-list">
+            <li><span><strong>도메인은 AI가 일할 현실 세계의 지도다.</strong> 지도 없이 AI에게 일을 시키면 일반론으로 빠진다.</span></li>
+            <li><span><strong>도메인 언어는 AI와 사람이 공유하는 업무 사전이다.</strong> 같은 단어를 같은 의미로 쓰게 만드는 것이 품질의 시작이다.</span></li>
+            <li><span><strong>도메인 지식은 AI의 오작동을 막는 필터다.</strong> 현장 규칙과 예외를 모르면 그럴듯하게 틀릴 수 있다.</span></li>
+            <li><span><strong>온톨로지는 AI가 관계를 따라가게 만드는 업무 지도다.</strong> 객체와 관계가 없으면 단어는 맞혀도 업무 연결을 틀릴 수 있다.</span></li>
+            <li><span><strong>도메인 문서는 프롬프트의 확장이다.</strong> AGENTS.md, CLAUDE.md, skills, glossary, 온톨로지, 테스트 시나리오가 모두 도메인 컨텍스트다.</span></li>
+            <li><span><strong>AI 시대의 경쟁력은 기술 사용 능력 × 도메인 해석 능력 × 관계 구조화 능력이다.</strong> 코딩 속도보다 문제 정의, 관계 설계, 검증 기준이 더 중요해진다.</span></li>
+          </ol>
+        </section>
+
+        <section class="slide reveal" id="actions">
+          <div class="slide-header">
+            <div class="kicker">Next Actions</div>
+            <h2>개인과 팀에서 바로 할 일</h2>
+          </div>
+          <div class="grid two">
+            <div class="mini-card">
+              <h3>바로 실행</h3>
+              <ul>
+                <li>핵심 업무 하나를 골라 <code>domain-language.md</code>를 만든다.</li>
+                <li>용어 10~20개를 정의한다.</li>
+                <li>헷갈리는 단어 쌍을 분리한다. 예: 주문/결제/구매/체크아웃.</li>
+                <li>핵심 객체와 관계를 10개 안팎의 triple로 적는다.</li>
+                <li>상태 흐름을 한 줄로 그린다.</li>
+                <li>반드시 지켜야 할 규칙 5개를 쓴다.</li>
+                <li>좋은 예시 3개와 나쁜 예시 3개를 적는다.</li>
+                <li>AI 작업 지시문에 이 도메인 문서를 참조하게 한다.</li>
+                <li>작업 후 AI가 도메인 언어를 어겼는지 점검한다.</li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <h3>To Do</h3>
+              <ul>
+                <li>자주 쓰는 AI 작업 하나를 골라 Domain Brief 템플릿으로 정리한다.</li>
+                <li>핵심 업무 하나를 골라 Ontology Sketch를 만든다.</li>
+                <li>LLM Wiki/Obsidian 도메인 용어집을 별도 노트로 만들지 검토한다.</li>
+                <li>기존 프롬프트 중 결과 계약서는 있지만 도메인 설명서가 없는 것을 찾아 보강한다.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide reveal" id="references">
+          <div class="slide-header">
+            <div class="kicker">Research</div>
+            <h2>리서치 참고</h2>
+          </div>
+          <ul class="sources">
+            <li>Martin Fowler, <a href="https://martinfowler.com/bliki/DomainDrivenDesign.html">Domain Driven Design</a></li>
+            <li>Martin Fowler, <a href="https://martinfowler.com/bliki/UbiquitousLanguage.html">Ubiquitous Language</a></li>
+            <li>Stanford, Noy & McGuinness, <a href="https://protege.stanford.edu/publications/ontology_development/ontology101-noy-mcguinness.html">Ontology Development 101</a></li>
+            <li>W3C, <a href="https://www.w3.org/TR/owl-overview/">OWL 2 Web Ontology Language Document Overview</a></li>
+            <li>Palantir, <a href="https://www.palantir.com/docs/foundry/architecture-center/ontology-system">The Ontology system</a></li>
+            <li>Palantir, <a href="https://www.palantir.com/docs/foundry/ontology/overview">Ontology overview</a></li>
+            <li>Microsoft Dev Blogs, <a href="https://devblogs.microsoft.com/all-things-azure/ai-coding-agents-domain-specific-languages/">AI Coding Agents and Domain-Specific Languages</a></li>
+            <li>Microsoft Dev Blogs, <a href="https://devblogs.microsoft.com/all-things-azure/context-driven-development-agent-skills-for-microsoft-foundry-and-azure/">Context-Driven Development</a></li>
+            <li>Microsoft Learn, <a href="https://learn.microsoft.com/en-us/azure/developer/azure-skills/overview">What is Azure Skills?</a></li>
+            <li>LangWatch, <a href="https://langwatch.ai/blog/from-scenario-to-finished-how-to-test-ai-agents-with-domain-driven-tdd">How to Test AI Agents with Domain-Driven TDD</a></li>
+            <li>Devoteam, <a href="https://www.devoteam.com/expert-view/domain-driven-design-explained-for-software-architects/">Domain-Driven Design Explained</a></li>
+            <li>arXiv, <a href="https://arxiv.org/html/2603.10808v1">Nurture-First Agent Development</a></li>
+            <li>YouTube, <a href="https://www.youtube.com/watch?v=DiAJQd2tA4g">AI시대 당신의 도메인 지식이 더 중요하다</a></li>
+            <li>YouTube, <a href="https://www.youtube.com/watch?v=b2eSsbjGZEk">도메인 주도 설계 DDD</a></li>
+          </ul>
+
+          <h3>관련 노트</h3>
+          <ul>
+            <li>(26.05.01) [Threads] GPT-5.5 프롬프트는 결과 계약서다</li>
+            <li>(26.04.30) [YouTube] AI한테 코드 맡기면 점점 이상해지는 진짜 이유</li>
+            <li>(26.05.02) [YouTube] AI 에이전트로 매출 100억 만든 스타트업 - 인핸스 이승현</li>
+          </ul>
+
+          <div class="summary-box">
+            이 노트의 핵심 관점은 “도메인은 기술보다 앞선 문제 세계의 언어이고,
+            온톨로지는 그 세계의 관계 지도”라는 것이다.
+            AI가 코드와 문장을 빠르게 생성할수록 사람이 해야 할 일은 더 분명해진다.
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">
+        Standalone HTML presentation artifact · local-only CSS and JavaScript · no remote resources
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const sections = [...document.querySelectorAll("section.slide")];
+    const links = [...document.querySelectorAll("#toc a")];
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          const id = entry.target.getAttribute("id");
+          links.forEach((link) => {
+            link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+          });
+        }
+      });
+    }, { rootMargin: "-18% 0px -70% 0px", threshold: 0.01 });
+
+    sections.forEach((section) => observer.observe(section));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll(".reveal").forEach((node) => revealObserver.observe(node));
+
+    async function copyText(text, target) {
+      try {
+        await navigator.clipboard.writeText(text);
+        target.textContent = "복사되었습니다.";
+        window.setTimeout(() => target.textContent = "", 1800);
+      } catch {
+        target.textContent = "복사 권한이 없어 선택 후 복사해 주세요.";
+      }
+    }
+
+    document.getElementById("copyOutline").addEventListener("click", () => {
+      const outline = [
+        "도메인 = AI가 다루는 현실 세계의 문제 영역",
+        "온톨로지 = 객체·속성·관계·제약을 연결한 의미 지도",
+        "AI 작업에는 Outcome Contract + Domain Brief + Ontology Sketch가 함께 필요",
+        "핵심 구성: 범위, 용어집, 상태 흐름, 관계, 규칙, 예시, 검증",
+        "AI 시대의 경쟁력 = 기술 사용 능력 × 도메인 해석 능력 × 관계 구조화 능력"
+      ].join("\\n");
+      copyText(outline, document.getElementById("copyState"));
+    });
+
+    document.getElementById("copyTemplate").addEventListener("click", () => {
+      const text = document.getElementById("domainTemplate").innerText;
+      copyText(text, document.getElementById("templateCopyState"));
+    });
+  </script>
+</body>
+</html>
