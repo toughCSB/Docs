@@ -1,22 +1,43 @@
 {
   "version": 1,
-  "updatedAt": "2026-05-13T09:50:48.964Z",
+  "updatedAt": "2026-05-16T04:16:49.530Z",
   "items": [
     {
-      "slug": "26-05-01-도메인-온톨리지란-무엇인가-ai-시대-문제-세계와-업무-언어",
+      "slug": "26-05-14-youtube-직원들-ai-쓰라고-닦달하는-거-아무-의미-없습니다",
+      "shortId": "ccmptf",
+      "url": "https://github.com/toughCSB/Docs/marktl/s/ccmptf/",
+      "canonicalUrl": "https://github.com/toughCSB/Docs/marktl/26-05-14-youtube-%EC%A7%81%EC%9B%90%EB%93%A4-ai-%EC%93%B0%EB%9D%BC%EA%B3%A0-%EB%8B%A6%EB%8B%AC%ED%95%98%EB%8A%94-%EA%B1%B0-%EC%95%84%EB%AC%B4-%EC%9D%98%EB%AF%B8-%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4/",
+      "sourcePath": "00. Inbox/(26.05.14) [YouTube] 직원들 AI 쓰라고 닦달하는 거 아무 의미 없습니다.md",
+      "artifactType": "interactive-explainer",
+      "title": "[YouTube] '직원들 AI 쓰라고 닦달하는 거 아무 의미 없습니다' [하지만 해냈죠? EP.5 대기업 편] / 스브스뉴스",
+      "excerpt": "[!info] Source URL: $1 Channel: 스브스뉴스 SUBUSUNEWS Published: 20260504 Duration: 24분 23초 Transcript: 679 snippets / source youtubetranscriptapi.fetch languages=ko,koKR,en,enUS Captur",
+      "tags": [
+        "- youtube",
+        "AI 강요보다 중요한 것",
+        "기업 AX 강요가 아니라 구조화다",
+        "직원들 AI 쓰라고 닦달하는 거 아무 의미 없습니다",
+        "Ji-yoon",
+        "youtube",
+        "ai",
+        "ax"
+      ],
+      "updatedAt": "2026-05-16T04:16:49.530Z"
+    },
+    {
+      "slug": "26-05-01-ëë©ì¸-ì¨í¨ë¦¬ì§ë-ë¬´ìì¸ê°-ai-ìë-ë¬¸ì -ì¸ê³ì-ìë¬´-ì¸ì´",
       "shortId": "sd130o",
       "url": "https://github.com/toughCSB/Docs/marktl/s/sd130o/",
       "canonicalUrl": "https://github.com/toughCSB/Docs/marktl/26-05-01-%EB%8F%84%EB%A9%94%EC%9D%B8-%EC%98%A8%ED%86%A8%EB%A6%AC%EC%A7%80%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80-ai-%EC%8B%9C%EB%8C%80-%EB%AC%B8%EC%A0%9C-%EC%84%B8%EA%B3%84%EC%99%80-%EC%97%85%EB%AC%B4-%EC%96%B8%EC%96%B4/",
-      "sourcePath": "00. Inbox/(26.05.01) 도메인, 온톨리지란 무엇인가 - AI 시대 문제 세계와 업무 언어.md",
+      "sourcePath": "00. Inbox/(26.05.01) ëë©ì¸, ì¨í¨ë¦¬ì§ë ë¬´ìì¸ê° - AI ìë ë¬¸ì  ì¸ê³ì ìë¬´ ì¸ì´.md",
       "artifactType": "slide-deck",
-      "title": "도메인이란 무엇인가 - AI 시대 문제 세계와 업무 언어",
-      "excerpt": "한줄 요약 ==도메인(domain)은 “AI나 소프트웨어가 다루는 현실 세계의 문제 영역”이고, 온톨로지(ontology)는 그 세계의 객체·관계·규칙을 AI가 따라갈 수 있게 만든 의미 지도다.== 기술이 “어떻게 만들 것인가”라면, 도메인은 “무엇을 만들고, 그 세계가 어떤 용어와 규칙으로 돌아가는가”를 뜻한다. 온톨",
+      "title": "ëë©ì¸ì´ë ë¬´ìì¸ê° - AI ìë ë¬¸ì  ì¸ê³ì ìë¬´ ì¸ì´",
+      "excerpt": "íì¤ ìì½ ==ëë©ì¸(domain)ì âAIë ìíí¸ì¨ì´ê° ë¤ë£¨ë íì¤ ì¸ê³ì ë¬¸ì  ìì­âì´ê³ , ì¨í¨ë¡ì§(ontology)ë ê·¸ ì¸ê³ì ê°ì²´Â·ê´ê³Â·ê·ì¹ì AIê° ë°ë¼ê° ì ìê² ë§ë  ìë¯¸ ì§ëë¤.== ê¸°ì ì´ âì´ë»ê² ë§ë¤ ê²ì¸ê°âë¼ë©´, ëë©ì¸ì âë¬´ìì ë§ë¤ê³ , ê·¸ ì¸ê³ê° ì´ë¤ ì©ì´ì ê·ì¹ì¼ë¡ ëìê°ëê°âë¥¼ ë»íë¤. ì¨í¨",
       "tags": [
         "- llm",
-        "도메인이란 무엇인가",
-        "AI 시대의 도메인 지식과 도메인 언어",
-        "도메인 = 문제 세계와 업무 언어",
-        "도메인과 온톨로지",
+        "ëë©ì¸ì´ë ë¬´ìì¸ê°",
+        "AI ìëì ëë©ì¸ ì§ìê³¼ ëë©ì¸ ì¸ì´",
+        "ëë©ì¸ = ë¬¸ì  ì¸ê³ì ìë¬´ ì¸ì´",
+        "ëë©ì¸ê³¼ ì¨í¨ë¡ì§",
         "Hermes",
         "llm",
         "domain-knowledge"
